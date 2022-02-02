@@ -2,6 +2,7 @@ import pandas as pd
 import requests
 import time
 from flask import Flask, render_template, request
+import datetime
 
 app = Flask(__name__)
 x = []
@@ -38,6 +39,13 @@ def get_file():
                 date = i.split()
         if date[-1] == 'PST':
             date[-1]=='PDT'
+        classDate = 0
+        if 'PM' in date:
+            classDate = datetime.datetime(2022, int(date[1].split('/')[0]), int(date[1].split('/')[1].split(',')[0]), int(date[2].split(':')[0])+12, int(date[2].split(':')[1]),0) 
+            classDate = classDate.timestamp()
+        else:
+            classDate = datetime.datetime(2022, int(date[1].split('/')[0]), int(date[1].split('/')[1].split(',')[0]), int(date[2].split(':')[0]), int(date[2].split(':')[1]),0) 
+            classDate = classDate.timestamp()
         evt['ts'] = usr['ts'] = ts
         evt['identity'] = usr['identity'] = mail
         evt['type'] = 'event'
@@ -52,11 +60,11 @@ def get_file():
             'utm campaign':'explorer',
             'channel':'kidpass',
             'class positioning':'transactional',
-            'date':date[1][:-1]+'/22',
+            'date':'$D_'+ str(classDate).split('.')[0],
             'time slot':''.join(date[2:7]),
             'time zone': date[-1],
             'day of the week':date[1],
-            'transaction date':ts
+            'transaction date':'$D_'+str(ts)
         }
 
         usr['type'] = 'profile'
@@ -84,8 +92,9 @@ def get_file():
         evt = evt.encode(encoding='utf-8')
         response2 = requests.post(
             'https://api.clevertap.com/1/upload', headers=headers, data=evt)
-        x.append({'user':response1.json()})
-        x.append({'event':response2.json()})
+        x.append({'number':len(x)//2, 'user':response1.json()})
+        x.append({'number':len(x)//2, 'event':response2.json()})
+        
     return f'{x}'
 
 if __name__ == '__main__':
