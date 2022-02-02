@@ -3,6 +3,7 @@ import requests
 import time
 from flask import Flask, render_template, request
 import datetime
+import pytz
 
 dotw = {
     'Mon':'monday',
@@ -52,12 +53,16 @@ def get_file():
         if date[-1] == 'PST':
             date[-1]=='PDT'
         classDate = 0
+        timezone=pytz.timezone('US/Pacific')
+
         if 'PM' in date:
-            classDate = datetime.datetime(2022, int(date[1].split('/')[0]), int(date[1].split('/')[1].split(',')[0]), int(date[2].split(':')[0])+12, int(date[2].split(':')[1]),0) 
-            classDate = classDate.timestamp()
+            classDate = datetime.datetime(2022, int(date[1].split('/')[0]), int(date[1].split('/')[1].split(',')[0]), int(date[2].split(':')[0]), int(date[2].split(':')[1]),0) 
+            classDate = timezone.localize(classDate).timestamp()
+            
         else:
             classDate = datetime.datetime(2022, int(date[1].split('/')[0]), int(date[1].split('/')[1].split(',')[0]), int(date[2].split(':')[0]), int(date[2].split(':')[1]),0) 
-            classDate = classDate.timestamp()
+            classDate = timezone.localize(classDate).timestamp()
+        
         evt['ts'] = usr['ts'] = ts
         evt['identity'] = usr['identity'] = mail
         evt['type'] = 'event'
