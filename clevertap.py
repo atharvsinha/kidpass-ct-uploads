@@ -4,6 +4,18 @@ import time
 from flask import Flask, render_template, request
 import datetime
 
+dotw = {
+    'Mon':'monday',
+    'Tue':'tuesday',
+    'Wed':'wednesday',    
+    'Thu':'thursday',
+    'Fri':'friday',
+    'Sat':'saturday',
+    'Sun':'sunday',    
+}
+
+
+
 app = Flask(__name__)
 x = []
 @app.route('/uploaded', methods=['GET' ,'POST'])
@@ -19,7 +31,7 @@ def get_file():
         age = 0
         pName = ''
         mail = ''
-        phone = ''
+        phone = '+'
         categ = '' 
         date = ''
         for i in data:
@@ -63,7 +75,7 @@ def get_file():
             'date':'$D_'+ str(classDate).split('.')[0],
             'time slot':''.join(date[2:7]),
             'time zone': date[-1],
-            'day of the week':date[1],
+            'day of the week':dotw[date[0]],
             'transaction date':'$D_'+str(ts)
         }
 
@@ -72,7 +84,7 @@ def get_file():
             'ParentName':pName,
             'ChildName':cName,
             'childAge':age, 
-            'phone':'+'+phone
+            'phone':'+' + phone
         }
         
 
@@ -94,7 +106,7 @@ def get_file():
             'https://api.clevertap.com/1/upload', headers=headers, data=evt)
         x.append({'number':len(x)//2, 'user':response1.json()})
         x.append({'number':len(x)//2, 'event':response2.json()})
-        
+        # x.append(evt)
     return f'{x}'
 
 if __name__ == '__main__':
