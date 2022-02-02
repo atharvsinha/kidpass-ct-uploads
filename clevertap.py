@@ -51,7 +51,7 @@ def get_file():
         evt['type'] = 'event'
         evt['evtName'] = 'trial class booked'
         evt['evtData'] = {
-            'category':categ,
+            'category':categ.lower(),
             'platform': 'web',
             'course': 'curio',
             'class type': 'group',
