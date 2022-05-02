@@ -23,12 +23,13 @@ x = []
 def get_file():
     evt = {}
     usr = {}
-    f = dict(request.form)
-    email = f['Email']
-    ts = int(round(time.time(), 0))
-    data = email.split('\n')
+    data = []
     if request.method == 'POST':
         
+        f = dict(request.form)
+        email = f['Email']
+        ts = int(round(time.time(), 0))
+        data = email.split('\n')
         cName = ''
         age = 0
         pName = ''
