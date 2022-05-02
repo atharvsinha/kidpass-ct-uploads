@@ -36,7 +36,7 @@ def get_file():
         categ = '' 
         date = ''
         for i in data:
-            if 'Attendee' in i:
+            if 'Attendee:' in i:
                 cName = i.split(':')[-1].strip()
             elif 'Age:' in i:
                 age = i.split(':')[-1].strip()
@@ -52,6 +52,7 @@ def get_file():
                 date = i.split()
         if date[-1] == 'PST':
             date[-1]=='PDT'
+        print(date)
         classDate = 0
         timezone=pytz.timezone('US/Pacific')
 
@@ -117,5 +118,6 @@ def get_file():
 if __name__ == '__main__':
     app.debug = True
     app.run()
+
 
 
