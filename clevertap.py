@@ -113,7 +113,8 @@ def get_file():
         x.append({'number':len(x)//2, 'user':response1.json()})
         x.append({'number':len(x)//2, 'event':response2.json()})
         # x.append(evt)
-    return f'{data}'
+        return f'{data}'
+    return 'hehe'
 
 if __name__ == '__main__':
     app.debug = True
