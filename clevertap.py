@@ -36,7 +36,7 @@ def get_file():
         categ = '' 
         date = ''
         for i in data:
-            if 'Attendee:' in i:
+            if 'Attendee' in i:
                 cName = i.split(':')[-1].strip()
             elif 'Age:' in i:
                 age = i.split(':')[-1].strip()
