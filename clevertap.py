@@ -57,13 +57,13 @@ def get_file():
         classDate = 0
         timezone=pytz.timezone('US/Pacific')
 
-        if 'PM' in date:
-            classDate = datetime.datetime(2022, int(date[1].split('/')[0]), int(date[1].split('/')[1].split(',')[0]), int(date[2].split(':')[0]), int(date[2].split(':')[1]),0) 
-            classDate = timezone.localize(classDate).timestamp()
+        # if 'PM' in date:
+        #     classDate = datetime.datetime(2022, int(date[1].split('/')[0]), int(date[1].split('/')[1].split(',')[0]), int(date[2].split(':')[0]), int(date[2].split(':')[1]),0) 
+        #     classDate = timezone.localize(classDate).timestamp()
             
-        else:
-            classDate = datetime.datetime(2022, int(date[1].split('/')[0]), int(date[1].split('/')[1].split(',')[0]), int(date[2].split(':')[0]), int(date[2].split(':')[1]),0) 
-            classDate = timezone.localize(classDate).timestamp()
+        # else:
+        #     classDate = datetime.datetime(2022, int(date[1].split('/')[0]), int(date[1].split('/')[1].split(',')[0]), int(date[2].split(':')[0]), int(date[2].split(':')[1]),0) 
+        #     classDate = timezone.localize(classDate).timestamp()
         
         evt['ts'] = usr['ts'] = ts
         evt['identity'] = usr['identity'] = mail
@@ -80,9 +80,9 @@ def get_file():
             'channel':'kidpass',
             'class positioning':'transactional',
             'date':'$D_'+ str(classDate).split('.')[0],
-            'time slot':''.join(date[2:7]),
+            # 'time slot':''.join(date[2:7]),
             'time zone': date,
-            'day of the week':dotw[date[0]],
+            # 'day of the week':dotw[date[0]],
             'transaction date':'$D_'+str(ts)
         }
 
