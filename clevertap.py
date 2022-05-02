@@ -36,7 +36,7 @@ def get_file():
         categ = '' 
         date = ''
         for i in data:
-            if 'Attendee:' in i:
+            if 'Attendee' in i:
                 cName = i.split(':')[-1].strip()
             elif 'Age:' in i:
                 age = i.split(':')[-1].strip()
@@ -50,10 +50,8 @@ def get_file():
                 categ = i.strip().split()[0]
             elif  ('PST' or 'PDT') in i:
                 date = i.split()
-        
-            # if date[-1] == 'PST':
-            #     date[-1]=='PDT'
-            # print(date)
+        # if date[-1] == 'PST':
+        #     date[-1]=='PDT'
         classDate = 0
         timezone=pytz.timezone('US/Pacific')
 
@@ -81,9 +79,10 @@ def get_file():
             'class positioning':'transactional',
             'date':'$D_'+ str(classDate).split('.')[0],
             # 'time slot':''.join(date[2:7]),
-            'time zone': date,
+            # 'time zone': date[-1],
             # 'day of the week':dotw[date[0]],
-            'transaction date':'$D_'+str(ts)
+            'transaction date':'$D_'+str(ts),
+            'date':str(date)
         }
 
         usr['type'] = 'profile'
@@ -114,12 +113,10 @@ def get_file():
         x.append({'number':len(x)//2, 'user':response1.json()})
         x.append({'number':len(x)//2, 'event':response2.json()})
         # x.append(evt)
-        return f'{x}'
-        
+    return f'{x}'
 
 if __name__ == '__main__':
     app.debug = True
     app.run()
-
 
 
