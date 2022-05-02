@@ -54,7 +54,7 @@ def get_file():
         #     date[-1]=='PDT'
         classDate = 0
         timezone=pytz.timezone('US/Pacific')
-
+        x.append(date)
         # if 'PM' in date:
         #     classDate = datetime.datetime(2022, int(date[1].split('/')[0]), int(date[1].split('/')[1].split(',')[0]), int(date[2].split(':')[0]), int(date[2].split(':')[1]),0) 
         #     classDate = timezone.localize(classDate).timestamp()
