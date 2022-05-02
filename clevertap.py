@@ -23,11 +23,12 @@ x = []
 def get_file():
     evt = {}
     usr = {}
+    f = dict(request.form)
+    email = f['Email']
+    ts = int(round(time.time(), 0))
+    data = email.split('\n')
     if request.method == 'POST':
-        f = dict(request.form)
-        email = f['Email']
-        ts = int(round(time.time(), 0))
-        data = email.split('\n')
+        
         cName = ''
         age = 0
         pName = ''
@@ -113,8 +114,8 @@ def get_file():
         x.append({'number':len(x)//2, 'user':response1.json()})
         x.append({'number':len(x)//2, 'event':response2.json()})
         # x.append(evt)
-        return f'{data}'
-    return 'hehe'
+    return f'{data}'
+    
 
 if __name__ == '__main__':
     app.debug = True
