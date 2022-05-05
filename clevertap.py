@@ -57,8 +57,7 @@ def get_file():
             
             
         if date[-1] == 'PST':
-            date[-1]=='PDT\r'
-        date[-1] = date[-1][:-2]
+            date[-1]=='PDT'
         
         classDate = 0
         timezone=pytz.timezone('US/Pacific')
@@ -90,7 +89,6 @@ def get_file():
             'time zone': date[-1],
             'day of the week':dotw[date[0]],
             'transaction date':'$D_'+str(ts),
-            'date':str(date)
         }
 
         usr['type'] = 'profile'
