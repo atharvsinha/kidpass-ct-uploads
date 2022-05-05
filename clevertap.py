@@ -26,10 +26,10 @@ def get_file():
     data = []
     if request.method == 'POST':
         
-        f = request.data
-        # email = f['Email']
+        f = dict(request.form)
+        email = f['Email']
         ts = int(round(time.time(), 0))
-        data = str(f).split('\\n')
+        data = str(email).split('\\n')
         cName = ''
         age = 0
         pName = ''
@@ -108,11 +108,11 @@ def get_file():
         
         usr = str(usr).encode(encoding='utf-8')
         response1 = requests.post(
-            'https://api.clevertap.com/1/upload', headers=headers, data=usr)
+            'https://api.clevertap.com/1/upload?dryRun=1', headers=headers, data=usr)
         
         evt = str(evt).encode(encoding='utf-8')
         response2 = requests.post(
-            'https://api.clevertap.com/1/upload', headers=headers, data=evt)
+            'https://api.clevertap.com/1/upload?dryRun=1', headers=headers, data=evt)
         x.append({'number':len(x)//2, 'user':response1.json()})
         x.append({'number':len(x)//2, 'event':response2.json()})
     return f'{x}'
