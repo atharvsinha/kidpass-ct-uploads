@@ -40,7 +40,7 @@ def get_file():
         categ = '' 
         date = ''
         for i in data:
-            x.append('in for' , i)
+            x.append(['in for' , i])
             
             if 'Attendee:' in i:
                 cName = i.split(':')[-1].strip()
