@@ -40,7 +40,7 @@ def get_file():
         categ = '' 
         date = ''
         for i in data:
-            
+            x.append(i)
             if 'Attendee:' in i:
                 cName = i.split(':')[-1].strip()
             elif 'Age:' in i:
@@ -53,8 +53,8 @@ def get_file():
                 phone = i.split(':')[-1].strip()
             elif 'Explorers -' in i:
                 categ = i.strip().split()[0]
-            elif  'PST\r'in i or 'PDT\r' in i:
-                date = i.split()
+            elif  'PST'in i or 'PDT' in i:
+                date = i
             
             
         # if date[-1] == 'PST\r':
