@@ -26,11 +26,10 @@ def get_file():
     data = []
     if request.method == 'POST':
         
-        f = request.data
-        # x.append(f)
-        # email = f['Email']
+        f = dict(request.form)        
+        email = f['Email']
         ts = int(round(time.time(), 0))
-        data = str(f).split('\\n')
+        data = str(email).split('\\n')
         cName = ''
         age = 0
         pName = ''
