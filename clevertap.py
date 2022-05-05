@@ -31,7 +31,7 @@ def get_file():
         
         email = f['Email']
         ts = int(round(time.time(), 0))
-        data = str(email).split('\\n')
+        data = str(email).split('\n')
         cName = ''
         age = 0
         pName = ''
@@ -40,7 +40,7 @@ def get_file():
         categ = '' 
         date = ''
         for i in data:
-            x.append(i)
+            x.append('in for',i)
             
             if 'Attendee:' in i:
                 cName = i.split(':')[-1].strip()
