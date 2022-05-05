@@ -1,7 +1,7 @@
 import pandas as pd
 import requests
 import time
-from flask import Flask, render_template, request
+from flask import Flask, jsonify, render_template, request
 import datetime
 import pytz
 
@@ -20,16 +20,16 @@ dotw = {
 app = Flask(__name__)
 x = []
 @app.route('/uploaded', methods=['GET' ,'POST'])
-def get_file():
+def get_file(): 
     evt = {}
     usr = {}
     data = []
     if request.method == 'POST':
         
-        f = dict(request.form)
-        email = f['Email']
+        f = request.data
+        # email = f['Email']
         ts = int(round(time.time(), 0))
-        data = email.split('\n')
+        data = str(f).split('\\n')
         cName = ''
         age = 0
         pName = ''
@@ -50,20 +50,21 @@ def get_file():
                 phone = i.split(':')[-1].strip()
             elif 'Explorers -' in i:
                 categ = i.strip().split()[0]
-            elif  (' AM ' or ' PM ') in i:
+            elif  ('PST' or 'PDT') in i:
                 date = i.split()
-        # if date[-1] == 'PST':
-        #     date[-1]=='PDT'
+            
+        if date[-1] == 'PST':
+            date[-1]=='PDT'
         classDate = 0
         timezone=pytz.timezone('US/Pacific')
-        x.append(date)
-        # if 'PM' in date:
-        #     classDate = datetime.datetime(2022, int(date[1].split('/')[0]), int(date[1].split('/')[1].split(',')[0]), int(date[2].split(':')[0]), int(date[2].split(':')[1]),0) 
-        #     classDate = timezone.localize(classDate).timestamp()
+
+        if 'PM' in date:
+            classDate = datetime.datetime(2022, int(date[1].split('/')[0]), int(date[1].split('/')[1].split(',')[0]), int(date[2].split(':')[0]), int(date[2].split(':')[1]),0) 
+            classDate = timezone.localize(classDate).timestamp()
             
-        # else:
-        #     classDate = datetime.datetime(2022, int(date[1].split('/')[0]), int(date[1].split('/')[1].split(',')[0]), int(date[2].split(':')[0]), int(date[2].split(':')[1]),0) 
-        #     classDate = timezone.localize(classDate).timestamp()
+        else:
+            classDate = datetime.datetime(2022, int(date[1].split('/')[0]), int(date[1].split('/')[1].split(',')[0]), int(date[2].split(':')[0]), int(date[2].split(':')[1]),0) 
+            classDate = timezone.localize(classDate).timestamp()
         
         evt['ts'] = usr['ts'] = ts
         evt['identity'] = usr['identity'] = mail
@@ -80,9 +81,9 @@ def get_file():
             'channel':'kidpass',
             'class positioning':'transactional',
             'date':'$D_'+ str(classDate).split('.')[0],
-            # 'time slot':''.join(date[2:7]),
-            # 'time zone': date[-1],
-            # 'day of the week':dotw[date[0]],
+            'time slot':''.join(date[2:7]),
+            'time zone': date[-1],
+            'day of the week':dotw[date[0]],
             'transaction date':'$D_'+str(ts),
             'date':str(date)
         }
@@ -92,30 +93,29 @@ def get_file():
             'ParentName':pName,
             'ChildName':cName,
             'childAge':age, 
-            'phone':'+' + phone
+            'phone':phone
         }
         
-
         evt = {'d': [evt]}
         usr = {'d': [usr]}
+        
 
         headers = {
             'X-CleverTap-Account-Id': '86K-4KR-WR6Z',
             'X-CleverTap-Passcode': 'SMM-AWC-YWUL',
             'Content-Type': 'application/json; charset=utf-8',
         }
-        usr = f'''{usr}'''
-        usr = usr.encode(encoding='utf-8')
+        
+        usr = str(usr).encode(encoding='utf-8')
         response1 = requests.post(
-            'https://api.clevertap.com/1/upload?dryRun=1', headers=headers, data=usr)
-        evt = f'''{evt}'''
-        evt = evt.encode(encoding='utf-8')
+            'https://api.clevertap.com/1/upload', headers=headers, data=usr)
+        
+        evt = str(evt).encode(encoding='utf-8')
         response2 = requests.post(
-            'https://api.clevertap.com/1/upload?dryRun=1', headers=headers, data=evt)
+            'https://api.clevertap.com/1/upload', headers=headers, data=evt)
         x.append({'number':len(x)//2, 'user':response1.json()})
         x.append({'number':len(x)//2, 'event':response2.json()})
-        # x.append(evt)
-    return f'{data}'
+    return f'{x}'
     
 
 if __name__ == '__main__':
