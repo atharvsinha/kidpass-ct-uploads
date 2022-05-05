@@ -60,7 +60,7 @@ def get_file():
         # if date[-1] == 'PST\r':
         #     date[-1]=='PDT\r'
         # date[-1] = date[-1][:-2]
-        x.append('date', date)
+        x.append(['date', date])
         # classDate = 0
         # timezone=pytz.timezone('US/Pacific')
 
