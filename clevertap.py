@@ -29,7 +29,7 @@ def get_file():
         f = dict(request.form)
         
         
-        email = f[0]['Email']
+        email = f['Email']
         ts = int(round(time.time(), 0))
         data = str(email).split('\\n')
         cName = ''
@@ -58,68 +58,68 @@ def get_file():
                 date = i.split()
             
             
-        if date[-1] == 'PST':
-            date[-1]=='PDT'
-        classDate = 0
-        timezone=pytz.timezone('US/Pacific')
+        # if date[-1] == 'PST':
+        #     date[-1]=='PDT'
+        # classDate = 0
+        # timezone=pytz.timezone('US/Pacific')
 
-        if 'PM' in date:
-            classDate = datetime.datetime(2022, int(date[1].split('/')[0]), int(date[1].split('/')[1].split(',')[0]), int(date[2].split(':')[0]), int(date[2].split(':')[1]),0) 
-            classDate = timezone.localize(classDate).timestamp()
+        # if 'PM' in date:
+        #     classDate = datetime.datetime(2022, int(date[1].split('/')[0]), int(date[1].split('/')[1].split(',')[0]), int(date[2].split(':')[0]), int(date[2].split(':')[1]),0) 
+        #     classDate = timezone.localize(classDate).timestamp()
             
-        else:
-            classDate = datetime.datetime(2022, int(date[1].split('/')[0]), int(date[1].split('/')[1].split(',')[0]), int(date[2].split(':')[0]), int(date[2].split(':')[1]),0) 
-            classDate = timezone.localize(classDate).timestamp()
+        # else:
+        #     classDate = datetime.datetime(2022, int(date[1].split('/')[0]), int(date[1].split('/')[1].split(',')[0]), int(date[2].split(':')[0]), int(date[2].split(':')[1]),0) 
+        #     classDate = timezone.localize(classDate).timestamp()
         
-        evt['ts'] = usr['ts'] = ts
-        evt['identity'] = usr['identity'] = mail
-        evt['type'] = 'event'
-        evt['evtName'] = 'trial class booked'
-        evt['evtData'] = {
-            'category':categ.lower(),
-            'platform': 'web',
-            'course': 'curio',
-            'class type': 'group',
-            'utm source':'kidpass',
-            'utm medium':'email webhook',
-            'utm campaign':'explorer',
-            'channel':'kidpass',
-            'class positioning':'transactional',
-            'date':'$D_'+ str(classDate).split('.')[0],
-            'time slot':''.join(date[2:7]),
-            'time zone': date[-1],
-            'day of the week':dotw[date[0]],
-            'transaction date':'$D_'+str(ts),
-            'date':str(date)
-        }
+        # evt['ts'] = usr['ts'] = ts
+        # evt['identity'] = usr['identity'] = mail
+        # evt['type'] = 'event'
+        # evt['evtName'] = 'trial class booked'
+        # evt['evtData'] = {
+        #     'category':categ.lower(),
+        #     'platform': 'web',
+        #     'course': 'curio',
+        #     'class type': 'group',
+        #     'utm source':'kidpass',
+        #     'utm medium':'email webhook',
+        #     'utm campaign':'explorer',
+        #     'channel':'kidpass',
+        #     'class positioning':'transactional',
+        #     'date':'$D_'+ str(classDate).split('.')[0],
+        #     'time slot':''.join(date[2:7]),
+        #     'time zone': date[-1],
+        #     'day of the week':dotw[date[0]],
+        #     'transaction date':'$D_'+str(ts),
+        #     'date':str(date)
+        # }
 
-        usr['type'] = 'profile'
-        usr['profileData'] = {
-            'ParentName':pName,
-            'ChildName':cName,
-            'childAge':age, 
-            'phone':phone
-        }
+        # usr['type'] = 'profile'
+        # usr['profileData'] = {
+        #     'ParentName':pName,
+        #     'ChildName':cName,
+        #     'childAge':age, 
+        #     'phone':phone
+        # }
         
-        evt = {'d': [evt]}
-        usr = {'d': [usr]}
+        # evt = {'d': [evt]}
+        # usr = {'d': [usr]}
         
 
-        headers = {
-            'X-CleverTap-Account-Id': '86K-4KR-WR6Z',
-            'X-CleverTap-Passcode': 'SMM-AWC-YWUL',
-            'Content-Type': 'application/json; charset=utf-8',
-        }
+        # headers = {
+        #     'X-CleverTap-Account-Id': '86K-4KR-WR6Z',
+        #     'X-CleverTap-Passcode': 'SMM-AWC-YWUL',
+        #     'Content-Type': 'application/json; charset=utf-8',
+        # }
         
-        usr = str(usr).encode(encoding='utf-8')
-        response1 = requests.post(
-            'https://api.clevertap.com/1/upload?dryRun=1', headers=headers, data=usr)
+        # usr = str(usr).encode(encoding='utf-8')
+        # response1 = requests.post(
+        #     'https://api.clevertap.com/1/upload?dryRun=1', headers=headers, data=usr)
         
-        evt = str(evt).encode(encoding='utf-8')
-        response2 = requests.post(
-            'https://api.clevertap.com/1/upload?dryRun=1', headers=headers, data=evt)
-        x.append({'number':len(x)//2, 'user':response1.json()})
-        x.append({'number':len(x)//2, 'event':response2.json()})
+        # evt = str(evt).encode(encoding='utf-8')
+        # response2 = requests.post(
+        #     'https://api.clevertap.com/1/upload?dryRun=1', headers=headers, data=evt)
+        # x.append({'number':len(x)//2, 'user':response1.json()})
+        # x.append({'number':len(x)//2, 'event':response2.json()})
     return f'{x}'
     
 
