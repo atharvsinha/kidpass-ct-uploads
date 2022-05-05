@@ -28,7 +28,6 @@ can manage your bookings.
  
 Privacy Policy <https://kidpass.com/privacy> | Terms Of Service
 <https://kidpass.com/terms>
-
 "'''
 # headers = {
 #   "X-CleverTap-Account-Id": "8WR-899-KR6Z",
