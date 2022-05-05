@@ -53,13 +53,13 @@ def get_file():
             elif 'Explorers -' in i:
                 categ = i.strip().split()[0]
             elif  'PST'in i or 'PDT' in i:
-                date = i
+                date = i.split()
             
             
         # if date[-1] == 'PST\r':
         #     date[-1]=='PDT\r'
         # date[-1] = date[-1][:-2]
-        x.append(['date', date.split()])
+        x.append(['date', date])
         # classDate = 0
         # timezone=pytz.timezone('US/Pacific')
 
