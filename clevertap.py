@@ -113,11 +113,11 @@ def get_file():
         
         usr = str(usr).encode(encoding='utf-8')
         response1 = requests.post(
-            'https://api.clevertap.com/1/upload?dryRun=1', headers=headers, data=usr)
+            'https://api.clevertap.com/1/upload', headers=headers, data=usr)
         
         evt = str(evt).encode(encoding='utf-8')
         response2 = requests.post(
-            'https://api.clevertap.com/1/upload?dryRun=1', headers=headers, data=evt)
+            'https://api.clevertap.com/1/upload', headers=headers, data=evt)
         x.append({'number':len(x)//2, 'user':response1.json()})
         x.append({'number':len(x)//2, 'event':response2.json()})
     return f'{x}'
