@@ -40,7 +40,6 @@ def get_file():
         categ = '' 
         date = ''
         for i in data:
-            x.append(['in for' , i])
             
             if 'Attendee:' in i:
                 cName = i.split(':')[-1].strip()
@@ -54,12 +53,14 @@ def get_file():
                 phone = i.split(':')[-1].strip()
             elif 'Explorers -' in i:
                 categ = i.strip().split()[0]
-            elif  'PST'in i or 'PDT' in i:
+            elif  'PST\r'in i or 'PDT\r' in i:
                 date = i.split()
             
             
-        # if date[-1] == 'PST':
-        #     date[-1]=='PDT'
+        if date[-1] == 'PST\r':
+            date[-1]=='PDT\r'
+        date[-1] = date[-1][:-2]
+        x.append('date', date)
         # classDate = 0
         # timezone=pytz.timezone('US/Pacific')
 
