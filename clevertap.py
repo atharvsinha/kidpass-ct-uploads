@@ -26,10 +26,11 @@ def get_file():
     data = []
     if request.method == 'POST':
         
-        f = dict(request.form)
-        email = f['Email']
+        f = request.data
+        # x.append(f)
+        # email = f['Email']
         ts = int(round(time.time(), 0))
-        data = str(email).split('\\n')
+        data = str(f).split('\\n')
         cName = ''
         age = 0
         pName = ''
@@ -38,6 +39,8 @@ def get_file():
         categ = '' 
         date = ''
         for i in data:
+            
+            
             if 'Attendee:' in i:
                 cName = i.split(':')[-1].strip()
             elif 'Age:' in i:
@@ -50,8 +53,9 @@ def get_file():
                 phone = i.split(':')[-1].strip()
             elif 'Explorers -' in i:
                 categ = i.strip().split()[0]
-            elif  ('PST' or 'PDT') in i:
+            elif  'PST'in i or 'PDT' in i:
                 date = i.split()
+            
             
         if date[-1] == 'PST':
             date[-1]=='PDT'
@@ -108,11 +112,11 @@ def get_file():
         
         usr = str(usr).encode(encoding='utf-8')
         response1 = requests.post(
-            'https://api.clevertap.com/1/upload?dryRun=1', headers=headers, data=usr)
+            'https://api.clevertap.com/1/upload', headers=headers, data=usr)
         
         evt = str(evt).encode(encoding='utf-8')
         response2 = requests.post(
-            'https://api.clevertap.com/1/upload?dryRun=1', headers=headers, data=evt)
+            'https://api.clevertap.com/1/upload', headers=headers, data=evt)
         x.append({'number':len(x)//2, 'user':response1.json()})
         x.append({'number':len(x)//2, 'event':response2.json()})
     return f'{x}'

@@ -2,18 +2,18 @@ import requests
 data = '''" <https://partners.kidpass.com/>        YOU HAVE A BOOKING
 
   
-  Attendee: Xander
+  Attendee: Atharv
 
   Child's Age: 9 years 
- Parent/Guardian: Susan Millius   
- Email: susanmillius@yahoo.com 
- Phone: +15188284958 
- Confirmation Number: 169516787 
+ Parent/Guardian: Atharv Sinha   
+ Email: atharv@better.club 
+ Phone: +918002365336 
+ Confirmation Number: 170448236 
  
-  Guitar Explorers - Free Guitar Class
-<https://kidpass.com/activities/11412/41807/169516787> 
+  Dance Explorers - Learn Your Favourite Ballet Moves
+<https://kidpass.com/activities/11412/43602/170448236> 
  Pixical <https://kidpass.com/providers/11412> 
- Fri 1/28, 4:00 PM - 4:30 PM PST 
+ Thu 5/5, 3:00 PM - 3:30 PM PDT 
       MANAGE BOOKINGS <https://partners.kidpass.com/>
 <http://www.instagram.com/kidpass> <http://www.facebook.com/kidpass>
 <http://www.twitter.com/kidpass> <https://blog.kidpass.com/>
@@ -28,6 +28,7 @@ can manage your bookings.
  
 Privacy Policy <https://kidpass.com/privacy> | Terms Of Service
 <https://kidpass.com/terms>
+
 "'''
 # headers = {
 #   "X-CleverTap-Account-Id": "8WR-899-KR6Z",
