@@ -73,7 +73,7 @@ def get_file():
         evt['ts'] = usr['ts'] = ts
         evt['identity'] = usr['identity'] = mail
         evt['type'] = 'event'
-        evt['evtName'] = 'trial class booked'
+        evt['evtName'] = 'drop in slot booked'
         evt['evtData'] = {
             'category':categ.lower(),
             'platform': 'web',
@@ -83,7 +83,7 @@ def get_file():
             'utm medium':'email webhook',
             'utm campaign':'explorer',
             'channel':'kidpass',
-            'class positioning':'transactional',
+            'class positioning':'drop-in',
             'date':'$D_'+ str(classDate).split('.')[0],
             'time slot':''.join(date[2:7]),
             'time zone': date[-1],
