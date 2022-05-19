@@ -39,6 +39,7 @@ def get_file():
         phone = '+'
         categ = '' 
         date = ''
+        classname = ''
         for i in data:
             if 'Attendee:' in i:
                 cName = i.split(':')[-1].strip()
@@ -51,6 +52,7 @@ def get_file():
             elif 'Phone:' in i:
                 phone = i.split(':')[-1].strip()
             elif 'Explorers -' in i:
+                classname = i
                 categ = i.strip().split()[0]
             elif  'PST'in i or 'PDT' in i:
                 date = i.split()
@@ -76,6 +78,7 @@ def get_file():
         evt['evtName'] = 'drop in slot booked'
         evt['evtData'] = {
             'category':categ.lower(),
+            'class name': classname,
             'platform': 'web',
             'course': 'curio',
             'class type': 'group',
