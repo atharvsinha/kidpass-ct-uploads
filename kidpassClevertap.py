@@ -27,11 +27,9 @@ def get_file():
     if request.method == 'POST':
         
         f = dict(request.form)
-        
-        
         email = f['Email']
-        ts = int(round(time.time(), 0))
         data = str(email).split('\n')
+        ts = int(round(time.time(), 0))
         cName = ''
         age = 0
         pName = ''
@@ -41,6 +39,7 @@ def get_file():
         date = ''
         classname = ''
         for i in data:
+    
             if 'Attendee:' in i:
                 cName = i.split(':')[-1].strip()
             elif 'Age:' in i:
@@ -60,17 +59,17 @@ def get_file():
             
         if date[-1] == 'PST':
             date[-1]=='PDT'
-        
-        classDate = 0
-        timezone=pytz.timezone('US/Pacific')
 
-        if 'PM' in date:
+        classDate = 0
+            
+        
+        if 'PM' not in date:
             classDate = datetime.datetime(2022, int(date[1].split('/')[0]), int(date[1].split('/')[1].split(',')[0]), int(date[2].split(':')[0]), int(date[2].split(':')[1]),0) 
-            classDate = timezone.localize(classDate).timestamp()
+            
             
         else:
-            classDate = datetime.datetime(2022, int(date[1].split('/')[0]), int(date[1].split('/')[1].split(',')[0]), int(date[2].split(':')[0]), int(date[2].split(':')[1]),0) 
-            classDate = timezone.localize(classDate).timestamp()
+            classDate = datetime.datetime(2022, int(date[1].split('/')[0]), int(date[1].split('/')[1].split(',')[0]), int(date[2].split(':')[0])+12, int(date[2].split(':')[1]),0) 
+            
         
         evt['ts'] = usr['ts'] = ts
         evt['identity'] = usr['identity'] = mail
@@ -119,6 +118,7 @@ def get_file():
         evt = str(evt).encode(encoding='utf-8')
         response2 = requests.post(
             'https://api.clevertap.com/1/upload', headers=headers, data=evt)
+        
         x.append({'number':len(x)//2, 'user':response1.json()})
         x.append({'number':len(x)//2, 'event':response2.json()})
     return f'{x}'
