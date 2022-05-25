@@ -28,7 +28,8 @@ def get_file():
         
         f = dict(request.form)
         email = f['Email']
-        data = str(email).split('\n')
+        
+        data = str(email).split('\\n')
         ts = int(round(time.time(), 0))
         cName = ''
         age = 0
@@ -65,11 +66,11 @@ def get_file():
         
         if 'PM' not in date:
             classDate = datetime.datetime(2022, int(date[1].split('/')[0]), int(date[1].split('/')[1].split(',')[0]), int(date[2].split(':')[0]), int(date[2].split(':')[1]),0) 
-            
+            classDate = classDate.timestamp()
             
         else:
             classDate = datetime.datetime(2022, int(date[1].split('/')[0]), int(date[1].split('/')[1].split(',')[0]), int(date[2].split(':')[0])+12, int(date[2].split(':')[1]),0) 
-            
+            classDate = classDate.timestamp()
         
         evt['ts'] = usr['ts'] = ts
         evt['identity'] = usr['identity'] = mail
@@ -92,7 +93,7 @@ def get_file():
             'day of the week':dotw[date[0]],
             'transaction date':'$D_'+str(ts),
         }
-
+        
         usr['type'] = 'profile'
         usr['profileData'] = {
             'ParentName':pName,
@@ -118,7 +119,7 @@ def get_file():
         evt = str(evt).encode(encoding='utf-8')
         response2 = requests.post(
             'https://api.clevertap.com/1/upload', headers=headers, data=evt)
-        
+        print(usr, evt)
         x.append({'number':len(x)//2, 'user':response1.json()})
         x.append({'number':len(x)//2, 'event':response2.json()})
     return f'{x}'
