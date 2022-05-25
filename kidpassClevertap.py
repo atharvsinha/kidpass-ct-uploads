@@ -28,8 +28,7 @@ def get_file():
         
         f = dict(request.form)
         email = f['Email']
-        
-        data = str(email).split('\\n')
+        data = str(email).split('\n')
         ts = int(round(time.time(), 0))
         cName = ''
         age = 0
