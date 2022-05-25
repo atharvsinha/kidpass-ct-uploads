@@ -64,11 +64,11 @@ def get_file():
             
         
         if 'PM' not in date:
-            classDate = datetime.datetime(2022, int(date[1].split('/')[0]), int(date[1].split('/')[1].split(',')[0]), int(date[2].split(':')[0]), int(date[2].split(':')[1]),0) 
+            classDate = datetime.datetime(2022, int(date[1].split('/')[0]), int(date[1].split('/')[1].split(',')[0]), int(date[2].split(':')[0])+7, int(date[2].split(':')[1]),0) 
             classDate = classDate.timestamp()
             
         else:
-            classDate = datetime.datetime(2022, int(date[1].split('/')[0]), int(date[1].split('/')[1].split(',')[0]), int(date[2].split(':')[0])+12, int(date[2].split(':')[1]),0) 
+            classDate = datetime.datetime(2022, int(date[1].split('/')[0]), int(date[1].split('/')[1].split(',')[0]), int(date[2].split(':')[0])+19, int(date[2].split(':')[1]),0) 
             classDate = classDate.timestamp()
         
         evt['ts'] = usr['ts'] = ts
